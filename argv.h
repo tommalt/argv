@@ -1,5 +1,6 @@
 /*
- * argv.h - a feature rich command line parser.
+ * argv.h - an argument parser that sucks less.
+ * derived from https://st.suckless.org/
  * by Tom Maltese
  */ 
 

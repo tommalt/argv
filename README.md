@@ -1,6 +1,4 @@
-# argv.h
-
-argv.h is **The Solution** to command line argument parsing
+# argv.h - an argument parser that sucks less
 
 ```c
 /* 
@@ -40,8 +38,13 @@ int main(int argc, char **argv)
 		printf("Unrecognized option\n");
 		return 1;
 	} ARGEND;
-run:
+
 	//...
 }
 ```
 
+argv.h is derived from the argument parser for the [simple terminal](https://st.suckless.org/)
+# Installation
+```shell
+curl 'https://raw.githubusercontent.com/tommalt/argv/master/argv.h' | sudo tee /usr/local/include/argv.h >/dev/null 2>&1
+```
