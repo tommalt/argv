@@ -14,16 +14,14 @@ for (argv0 = *argv, argv++, argc--;\
      (argc > 0) && argv[0] && argv[0][0] ; ) { \
 		char c;\
 		char *valp_;\
-		if (argv[0][1] == '-' && argv[0][2] == '\0') {\
+		if ((argv[0][1] == '-' && argv[0][2] == '\0')\
+		      || (**argv != '-')) {\
 		        argv++;\
 		        argc--;\
 		        break;\
 		}\
-		if (**argv != '-'){\
-			break;\
-		}\
 		for (valp_= *argv;\
-		     valp_ && *valp_; ) {\
+		     valp_ && *valp_ && *valp_ == '-'; ) {\
 			c = valp_[1];\
 			if (valp_[2] == '\0'){\
 				--argc;\
