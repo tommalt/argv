@@ -19,6 +19,9 @@ for (argv0 = *argv, argv++, argc--;\
 		        argc--;\
 		        break;\
 		}\
+		if (**argv != '-'){\
+			break;\
+		}\
 		for (valp_= *argv;\
 		     valp_ && *valp_; ) {\
 			c = valp_[1];\
