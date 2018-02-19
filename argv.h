@@ -22,12 +22,9 @@ for (argv0 = *argv, argv++, argc--;\
 		for (valp_= (*argv) + 1; *valp_ && !brk_; valp_++){\
 			switch (*valp_)
 #define ARGEND \
-		if (argc > 0) {\
-			--argc, ++argv;\
-		}\
 	}\
 }
-#define COZY_ARG() (argv[0][0] == '-' && argv[0][2] != '\0') ? \
+#define COZY_ARG() (!brk_ && (argv[0][0] == '-' && argv[0][2] != '\0')) ? \
                      (1) :\
 		     (0)
 #define HAS_ARGS() ((COZY_ARG()) || (argv[1] && argv[1][0] != '-') ? \
