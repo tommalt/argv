@@ -1,5 +1,5 @@
 /*
- * argv.h - an argument parser that sucks less.
+ * argv.h - an argument parser that sucks even less.
  * derived from https://st.suckless.org/
  * by Tom Maltese
  */ 
@@ -11,43 +11,29 @@ extern char *argv0;
 
 #define ARGBEGIN \
 for (argv0 = *argv, argv++, argc--;\
-     (argc > 0) && argv[0] && argv[0][0] ; ) { \
-		char c;\
+     argv[0] && argv[0][0] == '-' && argv[0][1] ; ) {\
 		char *valp_;\
-		if ((argv[0][1] == '-' && argv[0][2] == '\0')\
-		      || (**argv != '-')) {\
+		int brk_ = 0;\
+		if (argv[0][1] == '-' && argv[0][2] == '\0'){\
 		        argv++;\
 		        argc--;\
 		        break;\
 		}\
-		for (valp_= *argv;\
-		     valp_ && *valp_ && *valp_ == '-'; ) {\
-			c = valp_[1];\
-			if (valp_[2] == '\0'){\
-				--argc;\
-				valp_ = *++argv;\
-			} else {\
-				valp_ += 2;\
-			}\
-			switch(c)
+		for (valp_= (*argv) + 1; *valp_ && !brk_; valp_++){\
+			switch (*valp_)
 #define ARGEND \
+		if (argc > 0) {\
+			--argc, ++argv;\
+		}\
 	}\
 }
-#define ARGV(val) do {\
-	if (valp_ == (char*)0){\
-		val = (char*)0;\
-		break;\
-	} else if (valp_[0] == '-') {\
-		val = (char*)0;\
-	} else {\
-		val = valp_;\
-	}\
-	--argc, ++argv;\
-	if (*argv != NULL && **argv == '-')\
-		valp_ = NULL;\
-	else\
-		valp_ = *argv;\
-} while (0);
-
+#define COZY_ARG() (argv[0][0] == '-' && argv[0][2] != '\0') ? \
+                     (1) :\
+		     (0)
+#define HAS_ARGS() ((COZY_ARG()) || (argv[1] && argv[1][0] != '-') ? \
+                     (1) :\
+		     (--argc, ++argv, 0))
+#define NEXT_ARG() (brk_ ? (--argc, *++argv) :\
+                     (COZY_ARG()) ? (brk_ = 1, *argv + 2) : (--argc, *++argv))
 
 #endif  /* ARGV_H__ */
