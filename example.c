@@ -38,7 +38,11 @@ int main(int argc, char **argv)
 		printf("\n");
 		break;
 	case 'b':
-		NEXT_ARG();
+		if (HAS_ARGS()) {
+			val = NEXT_ARG();
+		}
+		printf("[b]: %s\n", val);
+		ARG_ADVANCE();
 		break;
 	default:
 		printf("Unrecognized option\n");

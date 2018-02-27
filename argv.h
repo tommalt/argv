@@ -24,6 +24,13 @@ for (argv0 = *argv, argv++, argc--;\
 #define ARGEND \
 	}\
 }
+#define ARG_ADVANCE() \
+do {\
+	argv++, argc--;\
+	while (argv[0] && argv[0][0] != '-'){\
+		++argv, --argc; \
+	}\
+} while (0);
 #define COZY_ARG() (!brk_ && (argv[0][0] == '-' && argv[0][2] != '\0')) ? \
                      (1) :\
 		     (0)
