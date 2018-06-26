@@ -19,8 +19,11 @@ int main(int argc, char **argv)
 		}
 		putchar('\n');
 		break;
+	case 'c':
+		printf("received -c option\n");
+		break;
 	default:
-		printf("default: op: %s\n", op);
+		printf("Unknown option: %s\n", op);
 		return 0;
 	} ARGEND;
 	return 0;
