@@ -1,50 +1,27 @@
 #include <stdio.h>
 #include "argv.h"
+
 int main(int argc, char **argv)
 {
-	char *val;
-	char *argv0;
+	char *tmp;
 	ARGBEGIN {
-	case 'a':
-		printf("[a]:");
-		while (HAS_ARGS()) {
-			val = NEXT_ARG();
-			printf(" %s",val);
+	case 'x':
+		printf("x values:");
+		while (tmp = GETF()) {
+			printf(" %s", tmp);
 		}
-		printf("\n");
+		putchar('\n');
 		break;
-	case 'r':
-		printf("[r]:");
-		while (HAS_ARGS()) {
-			val = NEXT_ARG();
-			printf(" %s",val);
+	case 'f':
+		printf("f values:");
+		while (tmp = GETF()) {
+			printf(" %s", tmp);
 		}
-		printf("\n");
-		break;
-	case 'g':
-		printf("[g]:");
-		while (HAS_ARGS()) {
-			val = NEXT_ARG();
-			printf(" %s",val);
-		}
-		printf("\n");
-		break;
-	case 'v':
-		printf("[v]:");
-		while (HAS_ARGS()) {
-			val = NEXT_ARG();
-			printf(" %s",val);
-		}
-		printf("\n");
-		break;
-	case 'b':
-		if (HAS_ARGS()) {
-			val = NEXT_ARG();
-		}
-		printf("[b]: %s\n", val);
-		ARG_ADVANCE();
+		putchar('\n');
 		break;
 	default:
-		printf("Unrecognized option\n");
+		printf("default: op: %s\n", op);
+		return 0;
 	} ARGEND;
+	return 0;
 }

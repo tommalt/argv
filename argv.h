@@ -1,43 +1,32 @@
 /*
  * argv.h - an argument parser that sucks even less.
- * derived from https://st.suckless.org/
+ * derived work of https://st.suckless.org/
  * by Tom Maltese
  */ 
 
 #ifndef ARGV_H__
 #define ARGV_H__
 
-extern char *argv0;
-
 #define ARGBEGIN \
-for (argv0 = *argv, argv++, argc--;\
-     argv[0] && argv[0][0] == '-' && argv[0][1] ; ) {\
-		char *valp_;\
-		int brk_ = 0;\
-		if (argv[0][1] == '-' && argv[0][2] == '\0'){\
-		        argv++;\
-		        argc--;\
-		        break;\
-		}\
-		for (valp_= (*argv) + 1; *valp_ && !brk_; valp_++){\
-			switch (*valp_)
+int ac; \
+char **av; \
+for (ac = argc - 1, av = argv + 1; \
+     ac && *av && av[0][0] == '-'; ac--, av++) { \
+	int brk = 0; \
+	char *op; \
+	if (av[0][1] == '-') { \
+		ac--; av++; \
+		break; \
+	} \
+	for (op = (*av) + 1; *op && !brk; op++) { \
+		switch (*op)
 #define ARGEND \
 	}\
 }
-#define ARG_ADVANCE() \
-do {\
-	argv++, argc--;\
-	while (argv[0] && argv[0][0] != '-'){\
-		++argv, --argc; \
-	}\
-} while (0);
-#define COZY_ARG() (!brk_ && (argv[0][0] == '-' && argv[0][2] != '\0')) ? \
-                     (1) :\
-		     (0)
-#define HAS_ARGS() ((COZY_ARG()) || (argv[1] && argv[1][0] != '-') ? \
-                     (1) :\
-		     (--argc, ++argv, 0))
-#define NEXT_ARG() (brk_ ? (--argc, *++argv) :\
-                     (COZY_ARG()) ? (brk_ = 1, *argv + 2) : (--argc, *++argv))
 
+#define GETF() \
+((!brk && !av[1]) || (av[1] && av[1][0] == '-')) ? (brk = 1, (void*)0x0) : \
+(!brk  &&   op[1] != '\0')                       ? (brk = 1, (av[0] + 1)) : \
+                                                   (brk = 1, --ac, *(++av))
 #endif  /* ARGV_H__ */
+
