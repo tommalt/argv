@@ -25,8 +25,9 @@ for (ac = argc - 1, av = argv + 1; \
 }
 
 #define GETF() \
-((!brk && !av[1]) || (av[1] && av[1][0] == '-')) ? (brk = 1, (void*)0x0) : \
-(!brk  &&   op[1] != '\0')                       ? (brk = 1, (av[0] + 1)) : \
-                                                   (brk = 1, --ac, *(++av))
+(!brk && op[1] != '\0') ? (brk = 1, (op + 1)) : \
+(av[1] && av[1][0] != '-') ? (brk = 1, --ac, *(++av)) : \
+                             (brk = 1, (char*)0x0)
+
 #endif  /* ARGV_H__ */
 
