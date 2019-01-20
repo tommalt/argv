@@ -72,6 +72,16 @@ int main(int argc, char **argv)
 	return 0;
 }
 ```
+```
+$ ./a.out -c -d -x 1 2 3 -f /usr/include/stdio.h --foo fighter --bar exam --baz ooka gum
+received -c option
+Received -d option
+x values: 1 2 3
+f values: /usr/include/stdio.h
+foo = fighter
+bar = exam
+baz: ooka gum
+```
 
 argv.h is derived from the argument parser for the [simple terminal](https://st.suckless.org/)
 # Installation
